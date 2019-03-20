@@ -10,22 +10,19 @@ populationData = read.csv(file="population.csv", head=TRUE)
 regionAreaData = read.csv(file="regionarea.csv", head=TRUE)
 DT<-data.table(populationData)
 
+populationDataGroupedByBarangay = group_by(populationData,Region,CityProvince,Barangay)
 
-populationDataGroupedByBarangay = group_by(populationData, Region,CityProvince,Barangay)
 populationDataGroupedByBarangayWithCount = summarize(populationDataGroupedByBarangay, population = sum(Population))
-
 
 mergedPopulationDataAndRegionData = merge(populationDataGroupedByBarangayWithCount, regionAreaData, by = "Region")       
 
-init=DT[,.(n=length(Barangay)),by=Region]
-tallyOfBarangayPerRegion=init[order(Region)]
+tallyOfBarangayPerRegion=DT[,.(n=length(Barangay)),by=Region]
 
 mergedPopulationDataAndRegionDataAndTally = merge(mergedPopulationDataAndRegionData, tallyOfBarangayPerRegion, by = "Region")       
 
-
 mergedPopulationDataAndRegionDataAndTallyWithBarangayArea = mutate(mergedPopulationDataAndRegionDataAndTally, landAreaOfBarangay = Area/n)
-finalDataSet = mutate(mergedPopulationDataAndRegionDataAndTallyWithBarangayArea, populationDensity = population/landAreaOfBarangay)
 
+finalDataSet = mutate(mergedPopulationDataAndRegionDataAndTallyWithBarangayArea, populationDensity = population/landAreaOfBarangay)
 
 output = arrange(finalDataSet, desc(populationDensity))
 
