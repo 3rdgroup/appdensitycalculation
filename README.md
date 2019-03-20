@@ -20,7 +20,7 @@ populationDataGroupedByBarangay = group_by(populationData, Region,CityProvince,B
 populationDataGroupedByBarangayWithCount = summarize(populationDataGroupedByBarangay, population = sum(Population))
 
 4. Merge Population Data and Region Area Data
-mergedPopulationDataAndRegionData = merge(populationDataGroupedByBarangayWithCount, regionAreaData, by = "Region")  
+mergedPopulationDataAndRegionDataAndTally = merge(mergedPopulationDataAndRegionData, tallyOfBarangayPerRegion, by = "Region")
 
 5. Get the count of Barangay per Region while taking into account that there are barangays that have the same names
 tallyOfBarangayPerRegion=DT[,.(n=length(Barangay)),by=Region]
