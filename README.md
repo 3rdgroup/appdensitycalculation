@@ -23,8 +23,7 @@ populationDataGroupedByBarangayWithCount = summarize(populationDataGroupedByBara
 mergedPopulationDataAndRegionData = merge(populationDataGroupedByBarangayWithCount, regionAreaData, by = "Region")  
 
 5. Get the count of Barangay per Region while taking into account that there are barangays that have the same names
-init=DT[,.(n=length(Barangay)),by=Region]
-tallyOfBarangayPerRegion=init[order(Region)]
+tallyOfBarangayPerRegion=DT[,.(n=length(Barangay)),by=Region]
 
 6. Merge count of Barangay per Region with the previous one     
 mergedPopulationDataAndRegionDataAndTally = merge(mergedPopulationDataAndRegionData, tallyOfBarangayPerRegion, by = "Region")       
@@ -42,12 +41,12 @@ output = arrange(finalDataSet, desc(populationDensity))
 topFiveBarangayWithHighestDensity = head(output, n=5)
 
 11. The list is as follows;
-      City Province                  Population Density
-      Quezon City                    80566
-      City of Manila                 48847
-      Caloocan City                  43464
-      Taguig City                    22087
-      City of Pasig                  20725
+      Barangay                       (Population Density)
+      Barangay 176                   (678817.5)
+      Commonwealth                   (546008.7)
+      Batasan Hills                  (444464.9)
+      Pinagbuhatan                   (418497.9)
+      Payatas                        (358892.2)
 
 12. Make an output in csv file
 write.csv(topFiveBarangayWithHighestDensity, file = "TopFiveBarangayWithHighestDensity.csv",row.names=FALSE)
@@ -87,12 +86,12 @@ output = arrange(finalDataSet, desc(populationDensity))
 topFiveCityWithHighestDensity = head(output, n=5)
 
 11. The list is as follows;
-      City Province                  Population Density
-      Quezon City                    80566
-      City of Manila                 48847
-      Caloocan City                  43464
-      Taguig City                    22087
-      City of Pasig                  20725
+      City Province                  (Population Density)
+      Quezon City                    (80566)
+      City of Manila                 (48847)
+      Caloocan City                  (43464)
+      Taguig City                    (22087)
+      City of Pasig                  (20725)
       
 12. Make an output in csv file
 write.csv(topFiveCityWithHighestDensity, file = "TopFiveCityWithHighestDensity.csv",row.names=TRUE)
