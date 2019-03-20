@@ -1,6 +1,6 @@
 # appdensitycalculation
 
-### Data Science Toolboox
+###Data Science Toolboox
 ## Discussion Exercise (3/20/2019)
 ## Alejandro, Dizon, Kuo, Matias, Peña
 
