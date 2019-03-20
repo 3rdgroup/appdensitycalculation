@@ -17,15 +17,30 @@ DT<-data.table(populationData)
 populationDataGroupedByBarangay = group_by(populationData, Region,CityProvince,Barangay)
 
 3. Summarize results
+populationDataGroupedByBarangayWithCount = summarize(populationDataGroupedByBarangay, population = sum(Population))
 
+4. Merge Population Data and Region Area Data
+mergedPopulationDataAndRegionData = merge(populationDataGroupedByBarangayWithCount, regionAreaData, by = "Region")  
 
-4. Merge City Province by Region and Region Area by Region
-5. Get the count of City per Region
-6. Merge count of City per Region with the previous one
+5. Get the count of Barangay per Region while taking into account that there are barangays that have the same names
+init=DT[,.(n=length(Barangay)),by=Region]
+tallyOfBarangayPerRegion=init[order(Region)]
+
+6. Merge count of Barangay per Region with the previous one     
+mergedPopulationDataAndRegionDataAndTally = merge(mergedPopulationDataAndRegionData, tallyOfBarangayPerRegion, by = "Region")       
+
 7. Add another column that contains the computations of land area of city (area/n)
+mergedPopulationDataAndRegionDataAndTallyWithBarangayArea = mutate(mergedPopulationDataAndRegionDataAndTally, landAreaOfBarangay = Area/n)
+
 8. Add another column that contains the computation of population denstiy (population/land area of city)
+finalDataSet = mutate(mergedPopulationDataAndRegionDataAndTallyWithBarangayArea, populationDensity = population/landAreaOfBarangay)
+
 9. Arrange the list in descending order
-10. Get only the top 5 of the list. 
+output = arrange(finalDataSet, desc(populationDensity))
+
+10. Get only the top 5 of the list.
+topFiveBarangayWithHighestDensity = head(output, n=5)
+
 11. The list is as follows;
       City Province                  Population Density
       Quezon City                    80566
@@ -35,6 +50,7 @@ populationDataGroupedByBarangay = group_by(populationData, Region,CityProvince,B
       City of Pasig                  20725
 
 12. Make an output in csv file
+write.csv(topFiveBarangayWithHighestDensity, file = "TopFiveBarangayWithHighestDensity.csv",row.names=FALSE)
 
 
 ## City Density 
