@@ -1,14 +1,24 @@
 # appdensitycalculation
 
-###Data Science Toolboox
+### Data Science Toolboox
 ## Discussion Exercise (3/20/2019)
 ## Alejandro, Dizon, Kuo, Matias, Peña
 
 
 ## Barangay Density
 1. Load dplyr and read the data csv files
-2. Group by City Province and Region
+library(dplyr)
+library(data.table)
+populationData = read.csv(file="population.csv", head=TRUE)
+regionAreaData = read.csv(file="regionarea.csv", head=TRUE)
+DT<-data.table(populationData)
+
+2. Group by City Province, Region, and Barangay
+populationDataGroupedByBarangay = group_by(populationData, Region,CityProvince,Barangay)
+
 3. Summarize results
+
+
 4. Merge City Province by Region and Region Area by Region
 5. Get the count of City per Region
 6. Merge count of City per Region with the previous one
