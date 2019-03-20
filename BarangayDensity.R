@@ -3,6 +3,7 @@
 #Use Library dplyr
 
 library(dplyr)
+library(data.table)
 
 # Load the datasets
 populationData = read.csv(file="population.csv", head=TRUE)
@@ -28,4 +29,6 @@ finalDataSet = mutate(mergedPopulationDataAndRegionDataAndTallyWithBarangayArea,
 
 output = arrange(finalDataSet, desc(populationDensity))
 
-topFiveBarangayWithHighestDensity = head(output, n=15)
+topFiveBarangayWithHighestDensity = head(output, n=5)
+
+write.csv(topFiveBarangayWithHighestDensity, file = "TopFiveBarangayWithHighestDensity.csv",row.names=FALSE)

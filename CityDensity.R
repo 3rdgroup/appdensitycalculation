@@ -29,5 +29,6 @@ output = arrange(finalDataSet, desc(populationDensity))
 
 topFiveCityWithHighestDensity = head(output, n=5)
 
+write.csv(topFiveCityWithHighestDensity, file = "TopFiveCityWithHighestDensity.csv",row.names=TRUE)
 
 
